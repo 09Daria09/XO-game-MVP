@@ -52,8 +52,7 @@ namespace XO_game_MVP
         public RadioButton SelectingNull { get; set; }
         public RadioButton SelectingSimpleLevel { get; set ; }
         public RadioButton SelectingHardLevel { get; set; }
-
-       // public event EventHandler<EventArgs> SelectionEvent; 
+ 
         public event EventHandler<SelectionEventArgs> SelectionEvent;
         public event EventHandler<EventArgs> RepeatEvent;
         public event EventHandler<EventArgs> RadioEvent;

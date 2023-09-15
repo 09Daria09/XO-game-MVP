@@ -20,7 +20,6 @@ namespace XO_game_MVP
             _view.RepeatEvent += new EventHandler<EventArgs>(Repeat);
             _view.RadioEvent += new EventHandler<EventArgs>(Radio);
         }
-
         private void Radio(object sender, EventArgs e)
         {
             UpdateCurrentPlayer();
@@ -50,7 +49,6 @@ namespace XO_game_MVP
                 _view.Board[computerMove.Item1, computerMove.Item2].BackgroundImage = _model.ImageCross;
             }
         }
-
         private void Repeat(object sender, EventArgs e)
         {
             _model.ResetGame();
@@ -95,31 +93,13 @@ namespace XO_game_MVP
 
             if (_model.CurrentLevel == _view.SelectingSimpleLevel.Text)
             {
-                var computerMove = _model.ComputerMoveSimple(); 
-                if (_model.CurrentPlayer == _view.SelectingCross.Text)
-                {
-                    _model.Board[computerMove.Item1, computerMove.Item2] = "O";
-                    _view.Board[computerMove.Item1, computerMove.Item2].BackgroundImage = _model.ImageNull;
-                }
-                else
-                {
-                    _model.Board[computerMove.Item1, computerMove.Item2] = "X";
-                    _view.Board[computerMove.Item1, computerMove.Item2].BackgroundImage = _model.ImageCross;
-                }
+                var computerMove = _model.ComputerMoveSimple();
+                ShowXorO(computerMove);
             }
             else
             {
-                //var computerMove = _model.FindBestMove();
-                //if (_model.CurrentPlayer == _view.SelectingCross.Text)
-                //{
-                //    _model.Board[computerMove.Item1, computerMove.Item2] = "O";
-                //    _view.Board[computerMove.Item1, computerMove.Item2].BackgroundImage = _model.ImageNull;
-                //}
-                //else
-                //{
-                //    _model.Board[computerMove.Item1, computerMove.Item2] = "X";
-                //    _view.Board[computerMove.Item1, computerMove.Item2].BackgroundImage = _model.ImageCross;
-                //}
+                var computerMove = _model.FindBestMove();
+                ShowXorO(computerMove);
             }
 
             string winner = _model.CheckWinCondition();
@@ -129,6 +109,12 @@ namespace XO_game_MVP
                 _view.ShowMessage($"Победил {winner}!");
                 Repeat(sender, e);
                 return; 
+            }
+            if (_model.CheckingDraws())
+            {
+                _view.ShowMessage("Ничья");
+                Repeat(sender, e);
+                return;
             }
         }
         private void UpdateCurrentPlayer()
@@ -151,6 +137,19 @@ namespace XO_game_MVP
             else
             {
                 _model.CurrentLevel = _view.SelectingHardLevel.Text;
+            }
+        }
+        private void ShowXorO(Tuple<int, int> computerMove)
+        {
+            if (_model.CurrentPlayer == _view.SelectingCross.Text)
+            {
+                _model.Board[computerMove.Item1, computerMove.Item2] = "O";
+                _view.Board[computerMove.Item1, computerMove.Item2].BackgroundImage = _model.ImageNull;
+            }
+            else
+            {
+                _model.Board[computerMove.Item1, computerMove.Item2] = "X";
+                _view.Board[computerMove.Item1, computerMove.Item2].BackgroundImage = _model.ImageCross;
             }
         }
 

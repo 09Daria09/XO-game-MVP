@@ -19,7 +19,6 @@ namespace XO_game_MVP
         RadioButton SelectingHardLevel { get; set; } 
         Button [,] Board {get; set;}
         void ShowMessage(string message);
-
     }
     public class SelectionEventArgs : EventArgs
     {

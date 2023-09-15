@@ -19,6 +19,7 @@ namespace XO_game_MVP
         bool IsBoardFull(int x, int y);
         void ResetGame();
         string CheckWinCondition();
+        bool CheckingDraws(); 
         Tuple<int, int> FindBestMove();
         int Minimax(int a, bool f);
         int Evaluate();
